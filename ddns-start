@@ -1,0 +1,32 @@
+#!/bin/sh
+
+EMAIL="" # Your account email
+APIKEY="" # Your API key
+ZONEID="" # Your zone id, hex16 string
+RECORDNAME="" # Your DNS record name, e.g. sub.example.com
+RECORDTTL="" # TTL in minute (1=auto)
+IP=${1}
+
+# Fetch DNS record ID
+RESPONSE="$(curl -s -X GET "https://api.cloudflare.com/client/v4/zones/${ZONEID}/dns_records?page=1&per_page=1000&order=type&direction=asc" \
+    -H "Content-Type:application/json" \
+    -H "X-Auth-Email: ${EMAIL}" \
+    -H "X-Auth-Key: ${APIKEY}")"
+
+RECORDID="$(echo ${RESPONSE} | sed -n "s/.*\"id\":\"\([^\"]*\)\".*\"name\":\"${RECORDNAME}\".*/\1/p")"
+
+# Update DNS record
+RESPONSE="$(curl -s -X PUT "https://api.cloudflare.com/client/v4/zones/${ZONEID}/dns_records/${RECORDID}" \
+    -H "Content-Type: application/json" \
+    -H "X-Auth-Email: ${EMAIL}" \
+    -H "X-Auth-Key: ${APIKEY}" \
+    --data "{\"type\":\"A\",\"name\":\"${RECORDNAME}\",\"content\":\"${IP}\",\"ttl\":${RECORDTTL},\"proxied\":false}")"
+
+# Check whether the update was successful
+echo $RESPONSE | grep '"success":\ *true' > /dev/null
+
+if [ $? -eq 0 ]; then
+  /sbin/ddns_custom_updated 1
+else
+  /sbin/ddns_custom_updated 0
+fi
