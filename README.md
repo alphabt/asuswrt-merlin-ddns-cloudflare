@@ -16,7 +16,7 @@ This is a custom shell script for Asuswrt-Merlin router firmware to update DDNS 
 
     `RECORDNAME` is your DNS record name, e.g. sub.example.com
 
-    `RECORDTTL` is the TTL for the record, defaults to 1 minute
+    `RECORDTTL` is the TTL for the record in seconds, defaults to auto
 
 1. SSH to your router and place `ddns-start` under `/jffs/scripts/`
 
@@ -28,5 +28,5 @@ This is a custom shell script for Asuswrt-Merlin router firmware to update DDNS 
 
 ## References
 
-- https://github.com/RMerl/asuswrt-merlin/wiki/Custom-DDNS
-- https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts
+- <https://github.com/RMerl/asuswrt-merlin/wiki/Custom-DDNS>
+- <https://github.com/RMerl/asuswrt-merlin/wiki/User-scripts>
