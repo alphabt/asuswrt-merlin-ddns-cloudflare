@@ -4,13 +4,14 @@ This is a custom shell script for Asuswrt-Merlin router firmware to update DDNS 
 
 ## Setup
 
-1. Add an A record in [CloudFlare](https://www.cloudflare.com/) for your domain. IP for the record can be anything since the script will overwrite it later any way.
+1. Add an `A record` in [CloudFlare](https://www.cloudflare.com/) for your domain. IP for the record can be anything since the script will overwrite it later anyway.
 
 1. Download [ddns-start](ddns-start) script and modify the following variables with your own settings:
 
-    `EMAIL` is your CloudFlare account email
+    `APITOKEN` is your API Token generated from the [User Profile 'API Tokens' page](https://dash.cloudflare.com/profile/api-tokens). I recommend creating a token with minimal access to limit exposure:
 
-    `APIKEY` is your API key
+    **Permission**: Zone | DNS | Edit  
+    **Zone Resources**: Include | Specific Zone | \<your zone\>
 
     `ZONEID` is your Zone ID, hex16 string
 
@@ -23,8 +24,8 @@ This is a custom shell script for Asuswrt-Merlin router firmware to update DDNS 
 1. Log into the router web UI
 
     1. Go to `Advanced Settings` > `WAN` > `DDNS`
-    2. Set `Server` to `Custom`
-    3. Click the `Apply` button
+    1. Set `Server` to `Custom`
+    1. Click the `Apply` button
 
 ## References
 
