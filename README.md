@@ -21,6 +21,8 @@ This is a custom shell script for Asuswrt-Merlin router firmware to update DDNS 
 
 1. SSH to your router and place `ddns-start` under `/jffs/scripts/`
 
+1. Make sure it's executable `chmod +x /jffs/scripts/ddns-start`
+
 1. Log into the router web UI
 
     1. Go to `Advanced Settings` > `WAN` > `DDNS`
