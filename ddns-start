@@ -61,7 +61,7 @@ for A_RECORD_ID in $A_RECORD_IDS; do
   if [ $? -eq 0 ]; then
     logger "Updated A record for ${RECORD_NAME} to ${IPv4}"
   else
-    logger "Unable to update A record for ${RECORD_NAME} from ${IPv4}"
+    logger "Unable to update A record for ${RECORD_NAME} with ${IPv4}"
     RESULT=false
   fi
 done
