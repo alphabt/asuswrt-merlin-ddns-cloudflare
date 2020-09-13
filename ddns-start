@@ -5,6 +5,7 @@ ZONE_ID=""        # Your zone id, hex16 string
 RECORD_NAME=""    # Your DNS record name, e.g. sub.example.com
 RECORD_TTL="1"    # TTL in seconds (1=auto)
 UPDATE_IPv6=false # Set to true if you want to also update IPv6
+IP_QUERY_SITE="https://myip.dnsomatic.com/"    # Site used to get external DNS if router isn't able to pull it due to double NAT
 
 get_dns_record_ids() {
   local record_name=$1
@@ -42,7 +43,15 @@ update_dns_record() {
 RESULT=true
 
 # Update IPv4
+#Get IPv4 from Router otherwise from external source
 IPv4=${1}
+if [ -z "$IPv4" ]; then
+  IPv4="$(curl -fs4 $IP_QUERY_SITE)"
+  logger "IP ${IPv4} obtained external source $IP_QUERY_SITE"
+else
+  logger "IP ${IPv4} obtained by router"
+fi
+
 A_RECORD_IDS=$(get_dns_record_ids $RECORD_NAME A $API_TOKEN $ZONE_ID)
 
 for A_RECORD_ID in $A_RECORD_IDS; do
@@ -52,7 +61,7 @@ for A_RECORD_ID in $A_RECORD_IDS; do
   if [ $? -eq 0 ]; then
     logger "Updated A record for ${RECORD_NAME} to ${IPv4}"
   else
-    logger "Unable to update A record for ${RECORD_NAME}"
+    logger "Unable to update A record for ${RECORD_NAME} with ${IPv4}"
     RESULT=false
   fi
 done
