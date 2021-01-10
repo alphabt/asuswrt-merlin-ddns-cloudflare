@@ -2,6 +2,10 @@
 
 This is a custom shell script for Asuswrt-Merlin router firmware to update DDNS via CloudFlare for both IPv4 and IPv6.
 
+## Notice
+
+If you use Asuswrt-Merlin version 384.7 or above you can leverage a new way to update DDNS. More info can be found at https://github.com/RMerl/asuswrt-merlin.ng/wiki/DDNS-services. This method is likely more robust and flexible.
+
 ## Prerequisite
 
 This script uses Python so make sure you have it installed in your environment. One way is to install via [Entware](https://github.com/RMerl/asuswrt-merlin.ng/wiki/Entware).
